@@ -5,40 +5,40 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SuccessModal from "./SuccesModal";
-import EditModal from './EditModal'
+import EditModal from "./EditModal";
 
 const SavedPwd = () => {
   const { passwords, handleDelete } = useGetPassowrd();
 
-
-
   const [open, setopenModal] = useState(false);
   const [openEdit, seteditModal] = useState(false);
-  const [data,setData]=useState({})
-
+  const [data, setData] = useState({});
 
   const handleModalClose = () => {
     setopenModal(false);
   };
-  const handleEditClose=()=>{
-    seteditModal(false)
-    console.log("csc")
-  }
+  const handleEditClose = () => {
+    seteditModal(false);
+    console.log("csc");
+  };
+
+  const style = {
+    recordContainer: {
+      display: "flex",
+      justifyContent: "start",
+      alignItems: "center",
+      marginBottom:"5px"
+    },
+  };
   return (
     <div>
       <SuccessModal open={open} onClose={handleModalClose} />
-      <EditModal open={openEdit} onClose={handleEditClose} data={data}/>
+      <EditModal open={openEdit} onClose={handleEditClose} data={data} />
       {passwords?.length > 0 ? (
         <div>
           {passwords.map((item, index) => (
             <div key={index}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "start",
-                  alignItems: "center",
-                }}
-              >
+              <div style={style.recordContainer}>
                 <div className="flexItem">
                   <Typography>{item?.link}</Typography>
                 </div>
@@ -48,8 +48,8 @@ const SavedPwd = () => {
                 <div
                   className="flexItem"
                   onClick={() => {
-                    setData(item)
-                    seteditModal(true)
+                    setData(item);
+                    seteditModal(true);
                   }}
                 >
                   <ModeEditIcon className="editIcon" />

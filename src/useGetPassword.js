@@ -12,24 +12,24 @@ const useGetPassowrd = () => {
     setPasswords(updated);
   };
 
-  const handleEdit = useCallback(
-    (updatedItem) => {
-      console.log("ITEM", updatedItem);
-      const password = localStorage.getItem("password");
-      let newPassWrd = JSON.parse(password);
-      let updated = newPassWrd.filter((item) => item.id !== updatedItem?.id);
-      updated.push({ ...updatedItem });
-      localStorage.setItem("password", JSON.stringify(updated));
-      setPasswords(updated);
-    },
-    [passwords]
-  );
-
-  useEffect(()=>{
+  const handleEdit = (updatedItem) => {
     const password = localStorage.getItem("password");
-    setPasswords(JSON.parse(password))
+    let newPassWrd = JSON.parse(password);
+    let updated = newPassWrd.map((item) => {
+      if (item.id == updatedItem?.id) {
+        return { ...updatedItem };
+      } else {
+        return item;
+      }
+    });
+    localStorage.setItem("password", JSON.stringify(updated));
+    setPasswords(updated)
+  };
 
-  },[])
+  useEffect(() => {
+    const password = localStorage.getItem("password");
+    setPasswords(JSON.parse(password));
+  }, [password]);
 
   return { passwords, handleDelete, handleEdit };
 };
