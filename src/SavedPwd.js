@@ -22,6 +22,7 @@ const SavedPwd = () => {
   };
   const handleEditClose=()=>{
     seteditModal(false)
+    console.log("csc")
   }
   return (
     <div>
