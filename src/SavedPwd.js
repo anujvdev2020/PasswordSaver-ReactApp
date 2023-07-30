@@ -1,50 +1,20 @@
-import React from "react";
+import React,{useState} from "react";
 import Typography from "@mui/material/Typography";
 import useGetPassowrd from "./useGetPassword";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import useDeleteItem from "./useDeleteItem";
-import Modal from "@mui/material/Modal";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4
-};
+import SuccessModal from "./SuccesModal";
 
 const SavedPwd = () => {
-  const { passwords } = useGetPassowrd();
-  const { handleDelete } = useDeleteItem();
-  const ModalSection = () => {
-    return (
-      <>
-        <Modal
-          open={true}
-          onClose={{}}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <div style={style}></div>
-        </Modal>
-      </>
-    );
+  const { passwords, handleDelete } = useGetPassowrd();
+  const [open, setopenModal] = useState(false);
+  const handleModalClose = () => {
+    setopenModal(false);
   };
   return (
     <div>
-      {/* {ModalSection()} */}
-      <Modal
-        open={true}
-        onClose={() => {}}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      ></Modal>
+      <SuccessModal open={open} onClose={handleModalClose} />
       {passwords?.length > 0 ? (
         <div>
           {passwords.map((item, index) => (
@@ -53,7 +23,7 @@ const SavedPwd = () => {
                 style={{
                   display: "flex",
                   justifyContent: "start",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <div className="flexItem">
@@ -65,7 +35,12 @@ const SavedPwd = () => {
                 <div className="flexItem">
                   <ModeEditIcon className="editIcon" />
                 </div>
-                <div onClick={() => handleDelete(item?.id)}>
+                <div
+                  onClick={() => {
+                    setopenModal(true)
+                    handleDelete(item?.id);
+                  }}
+                >
                   <DeleteIcon className="delIcon"></DeleteIcon>
                 </div>
               </div>
